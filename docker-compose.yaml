@@ -1,21 +1,10 @@
-version: "3.8"
 services:
   api:
     build:
       dockerfile: Dockerfile
       context: .
-      # Only will build development stage from our dockerfile
-      target: development
-    # Mount our host Directory to the docker container
-    # Mount (.) current directory to the docker container usr/src/app
-    # reflect file changes from host to container
-    volumes:
-      - .:/usr/src/app
-      - /usr/src/app/node_modules
-    # Run in Debug Mode: npm run start:debug --> Don't forget to start your vscode debugger!
-    # Run in dev Mode: npm run start:dev
-    command: npm run start:debug
-
+    env_file:
+      - .env
     depends_on:
       - mysql
     environment:
@@ -23,34 +12,33 @@ services:
 
     ports:
       - 3000:3000
-      # debugging port
-      - 9229:9229
+
 
   mysql:
-    image: mysql:latest
+    image: mysql:9
     restart: always
     environment:
       MYSQL_DATABASE: nestapp
       MYSQL_ALLOW_EMPTY_PASSWORD: "yes"
-      MYSQL_ROOT_PASSWORD: 
+      MYSQL_ROOT_PASSWORD: ""
     volumes:
       - mysql_data:/var/lib/mysql
     ports:
-      - '3306:3306'
+      - '3308:3306'
 
   phpmyadmin:
-    image: phpmyadmin/phpmyadmin:latest
+    image: phpmyadmin/phpmyadmin:5
     restart: always
     ports:
-      - "80:80"
+      - "8082:80"
     depends_on:
       - mysql
     environment:
       PMA_HOST: mysql
       PMA_PORT: 3306
-      MYSQL_ROOT_PASSWORD: 
-    # logging:
-      # driver: none  # Disable logging for phpMyAdmin service
-  
+      PMA_USER: root
+      PMA_PASSWORD: ""  
+
+
 volumes:
   mysql_data:

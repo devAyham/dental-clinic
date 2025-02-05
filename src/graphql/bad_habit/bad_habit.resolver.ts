@@ -3,7 +3,7 @@ import { BadHabitService } from './bad_habit.service';
 import { BadHabit } from './entities/bad_habit.entity';
 import { CreateBadHabitInput } from './dto/create-bad_habit.input';
 import { UpdateBadHabitInput } from './dto/update-bad_habit.input';
-import { Paginatebadhabit } from './entities/PAginatebadhabit';
+import { Paginatebadhabit } from './entities/Paginatebadhabit';
 import { checkIfExists, validator } from '../../validatior/validator';
 import { createBadHabit, updateBadHabit } from './validation/badhabit.validation';
 import { error } from 'console';
