@@ -11,7 +11,7 @@ services:
       - DATABASE_URL=mysql://root:@mysql:3306/nestapp
 
     ports:
-      - 3000:3000
+      - 3007:3000
 
 
   mysql:
